@@ -1,19 +1,17 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from authors.forms.login import LoginForm
-from games.models import Games, Profile
+from games.models import Games, List
 
 from .forms import RegisterForm
+from .models import Profile
 
 # from games.models import Favorite
-
-
-
 
 # Create your views here.
 
@@ -28,7 +26,7 @@ def register_view(request):
 def register_create(request):
     if not request.POST:
         raise Http404()
-    
+
     POST = request.POST
     request.session['register_form_data'] = POST
     form = RegisterForm(POST)
@@ -91,28 +89,42 @@ def games(request):
         })
 
 @login_required(login_url='authors:login', redirect_field_name='next')
-def games_edit(request, id):
-    game = Games.objects.filter(
+def list_view(request):
+    # games = Games.objects.filter(
+    #     author=request.user
+    # )
+    lists = List.objects.all()
+    return render(
+        request, 
+        'games/pages/lists.html', 
+        context={
+            'lists': lists,
+        })
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def list_edit(request, id):
+    list = List.objects.filter(
         author=request.user,
         pk=id,
     )
 
-    if not game:
+    if not list:
         raise Http404()
 
-    games = Games.objects.all().order_by('title')
+    listas = List.objects.get(id=id)
+    gamelist = listas.games.all()
     return render(
         request, 
         'games/pages/lista.html', 
         context={
-
+            'gamelist': gamelist
         })
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def favorites_add(request, games_id):
-    user = request.user
+    author = request.user
     fave = Games.objects.get(id=games_id)
-    profile = Profile.objects.get(user=user)
+    profile = Profile.objects.get(author=author)
     if profile.favourite.filter(id=games_id).exists():
         profile.favourite.remove(fave)
     else:
@@ -123,8 +135,8 @@ def favorites_add(request, games_id):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def favorites_view(request):
-    user = request.user
-    profile = Profile.objects.get(user=user)
+    author = request.user
+    profile = Profile.objects.get(author=author)
     fave = profile.favourite.all()
 
     return render(
@@ -134,6 +146,20 @@ def favorites_view(request):
             'faves': fave,
         })
 
-    
+# @login_required(login_url='authors:login', redirect_field_name='next')
+# def games_details(request, id):
+#     game = Games.objects.filter(
+#         author=request.user,
+#         pk=id,
+#     )
 
+#     if not game:
+#         raise Http404()
 
+#     games = Games.objects.all().order_by('title')
+#     return render(
+#         request, 
+#         'games/pages/lista.html', 
+#         context={
+
+#         })

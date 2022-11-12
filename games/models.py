@@ -58,7 +58,7 @@ class List(models.Model):
     def __str__(self):
         return self.title
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    favourite = models.ManyToManyField(Games)
-    my_lists = models.ManyToManyField(List)
+# class Profile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+#     favourite = models.ManyToManyField(Games)
+#     my_lists = models.ManyToManyField(List)

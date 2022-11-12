@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Games, Genre, List, ReviewRating, Profile
+from .models import Games, Genre, List, ReviewRating
+from authors.models import Profile
 
 # Register your models here.
 

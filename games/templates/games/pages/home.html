@@ -65,7 +65,7 @@
         {% endif %}
         <a href="{% url 'authors:favorites_add' game.id %}">❤</a>
         <img src="" alt="">
-        <a href="{% url 'authors:games_edit' game.id %}"><h3 class="card-name">{{game.title}}</h3></a> 
+        {% comment %} <a href="{% url 'authors:list_edit' game.id %}"><h3 class="card-name">{{game.title}}</h3></a>  {% endcomment %}
         <span class="author-list">{{game.developer}}</span>
         <p>{{game.description}}</p>
       </a>
