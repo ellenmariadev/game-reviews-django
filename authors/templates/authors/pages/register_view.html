@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastrar</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+
+  <script src="https://kit.fontawesome.com/352d096582.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'authors/css/loginregister.css' %}" />
+  <link rel="stylesheet" href="{% static 'global/css/global-style.css' %}">
+</head>
+
+<body>
+  <button class="btn-back position-absolute top-0 start-0">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+  <main>
+    {% if messages %}
+<div>
+    {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+    <h1>Cadastrar</h1>
+
+    <form class="formulario" action="{% url 'authors:register_create' %}" method="POST">
+        {% for field in form %}
+        {% csrf_token %}
+      <div class="form-floating mb-3">
+        {% comment %} <input class="form-control" id="floatingInput" placeholder="E-mail" autocomplete="off" required="true" /> {% endcomment %}
+        {{field}}
+        <label for="{{field.id_label}}">{{field.label}}</label>
+        {% if form.errors %}
+        <small class="text-center">{{ field.errors }}</small>
+        {%endif%}
+      </div>
+      {% comment %} {% if field.help_text %} 
+      <small class="text-light">{{field.help_text}}</small>
+      {% endif %}  {% endcomment %}
+      {% endfor %}
+      
+
+      {% comment %} {% if form.errors%}
+      <div class="form-group">
+        <div class="message message-error">
+          Corrija os erros do formulário.
+        </div>
+      </div>
+      {%endif%} {% endcomment %}
+
+      {% comment %} <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="Nome de Usuário" autocomplete="off" required="true" />
+        <label for="floatingInput">Nome de Usuário</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" autocomplete="off" required="true" />
+        <label for="floatingPassword">Senha</label>
+      </div> {% endcomment %}
+      <p class="text-center small">
+        Ao criar uma conta, você concorda com os
+        <a href="#">Termos de Serviço</a> <br />
+        e a <a href="#">Política de Privacidade</a> do GameReviews.
+      </p>
+      <button class="btn-login" type="submit">Cadastrar
+       <svg viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" fill-rule="evenodd"></path>
+        </svg>
+      </button>
+      <p class="text-center small">
+        Já tem uma conta? <a href="{% url 'authors:login' %}">Entrar</a>
+      </p>
+    </form>
+  </main>
+</body>
+
+</html>

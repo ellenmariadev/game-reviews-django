@@ -1,0 +1,12 @@
+{% if request.user.is_authenticated %}
+<p>
+  Your are logged in with 
+  {{ request.user.username }}.
+  <a href="{% url 'authors:logout' %}">Sair da Conta</a>
+</p>
+{% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}

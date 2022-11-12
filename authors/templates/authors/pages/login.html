@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+
+  <script src="https://kit.fontawesome.com/352d096582.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'authors/css/loginregister.css' %}" />
+  <link rel="stylesheet" href="{% static 'global/css/global-style.css' %}">
+</head>
+
+<body>
+  <button class="btn-back position-absolute top-0 start-0"><i class="fa-solid fa-chevron-left"></i></button>
+  <main>
+    <h1>Login</h1>
+    {% include 'authors/partials/login_message.html' %}
+
+    <form class="formulario" action="{% url 'authors:login_create' %}" method="POST">
+      {% if not request.user.is_authenticated %}
+      {% for field in form %}
+      {% csrf_token %}
+      <div class="form-floating mb-3">
+        {% comment %} <input class="form-control" id="floatingInput" placeholder="E-mail" autocomplete="off" required="true" /> {% endcomment %}
+        {{field}}
+        <label for="{{field.id_label}}">{{field.label}}</label>
+        {% comment %} {% if form.errors %}
+        <small class="text-center">{{ field.errors }}</small>
+        {%endif%} {% endcomment %}
+      </div>
+      {% comment %} {% if field.help_text %}
+      <small class="text-light">{{field.help_text}}</small>
+      {% endif %} {% endcomment %}
+      {% endfor %}
+      <button class="btn-login" type="submit">Entrar<svg viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" fill-rule="evenodd"></path>
+        </svg></button>
+      <p class="text-center small mb-0 mt-2">Não tem uma conta? <a href="{% url 'authors:register' %}">Cadastrar</a></p>
+      <p class="text-center small"><a href="login.html"><u>Esqueceu a senha?</u></a></p>
+    </form>
+    {% endif %}
+    <!-- <button class="btn btn-info" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...
+      </button> -->
+
+  </main>
+
+</body>
+
+</html>
