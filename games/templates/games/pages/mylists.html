@@ -24,7 +24,7 @@
       <a class="navbar-brand text-light href=" #"><i class="bi bi-joystick"></i> Game Review</a>
       <ul class="d-flex menu-list">
         <li><a class="menu-link text-light" href="#"><i class="bi bi-controller"></i> Ver Jogos</a></li>
-        <li><a class="menu-link text-light" href="{% url 'authors:lists' %}"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
+        <li><a class="menu-link text-light" href="#"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
       </ul>
       <div class="btn-group">
         <button class="dropdown-toggle menu-user text-light fw-semibold" aria-labelledby="dropdownMenu1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,7 +32,7 @@
         </button>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="{% url 'authors:favorites' %}"><i class="bi bi-search-heart"></i> Favoritos</a></li>
-          <li><a class="dropdown-item" href="{% url 'authors:my_list' %}"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
+          <li><a class="dropdown-item" href="minhas-listas.html"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
           <li>
             <hr class="dropdown-divider">
           </li>
@@ -43,6 +43,8 @@
   </nav>
 
   <header>
+    <h2 class="title">Adicionar <em>Nova Lista</em></h2>
+    <a href="{% url 'authors:newlistadd' %}"><button class="btn-list">+ Criar Lista</button></a>
     <input type="search" name="pesquisar" id="pesquisar" placeholder="Pesquisar...">
   </header>
 
@@ -56,15 +58,12 @@
               {{ message }}
           </div>
       {% endfor %}
-    {% for game in games %}
+    {% for list in lists %}
     <div class="cardi">
-      {% if game.image %}
-        <img style="height: 150px; max-width: 120px;" src="{{game.image.url}}" alt="{{game.title}}">
-        {% endif %}
-        <a href="{% url 'authors:favorites_add' game.id %}">❤</a>
-        <a href="{% url 'authors:game_details' game.id %}"><h3 class="card-name">{{game.title}}</h3></a> 
-        <span class="author-list">{{game.developer}}</span>
-        <p>{{game.description}}</p>
+        {% comment %} <a href="{% url 'authors:list_edit' list.id %}"><h3 class="card-name">{{list.title}}</h3></a>  {% endcomment %}
+        <a href="{% url 'authors:list_edit' list.id %}"><h3 class="card-name">{{list.title}}</h3></a> 
+        <span class="author-list">👤 {{list.author}}</span>
+        <p>{{list.description}}</p>
       </a>
     </div>
     {% endfor %}

@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{% static 'games/css/crudgames.css' %}">
+    <link rel="stylesheet" href="{% static 'games/css/listas.css' %}">
     <link rel="stylesheet" href="{% static 'global/css/global-style.css' %}">
 </head>
 
@@ -42,42 +42,28 @@
     </div>
   </nav>
 
-  {{f}}
-
   <header>
-    <h2>Editar Lista</h2>
+    <h2 class="title">{{lists.title}}</h2>
+    
 </header>
 
-<main>
-    <form>
-        <label class="visually-hidden" for="namelist">Nome da Lista</label>
-        <input type="text" name="namelist" id="namelist" placeholder="Nome da Lista">
-        <textarea rows="6" placeholder="Descrição"></textarea>
-
-        <label class="visually-hidden" for="addgame">Digite o nome do jogo...</label>
-        <input type="text" name="addgame" id="addgame" placeholder="Digite o nome do jogo...">
-
-        <button class="btn-newlist">+ Adicionar</button>
-    </form>
-</main>
-{% for gamelis in gamelist %}
-  <p>{{gamelis}}</p>
-{% endfor %}
-<section>
-    <div class="cardes">
-        <div class="carde">
-            <h3>Stardew Valley, 2013</h3>
-            <span><em>Naughty Dog</em></span>
-        </div>
-        {% for gamelis in gamelist %}
-        <div class="carde">
-            <h3 class="card-name">{{gamelis.title}}</h3>
-            {% comment %} <span class="author-list">{{game.developer}}</span> {% endcomment %}
-        </div>
-        {% endfor %}
-    </div>
-    <button class="btn-newlist">Editar Lista</button>
-</section> 
+<main> 
+      <p>{{lists.description}}</p>
+      <p>{{game.title}}</p>
+      {% for game in gamelists %}
+      <div class="cardi">
+        {% if game.image %}
+          <img style="height: 150px; max-width: 120px;" src="{{game.image.url}}" alt="{{game.title}}">
+          {% endif %}
+          <a href="{% url 'authors:favorites_add' game.id %}">❤</a>
+          <a href="{% url 'authors:details' game.id %}"><h3 class="card-name">{{game.title}}</h3></a> 
+          <span class="author-list">{{game.developer}}</span>
+          <p>{{game.description}}</p>
+        </a>
+      </div>
+      {% endfor %}
+{% comment %} PÁGINA DE DETALHES DA LISTA {% endcomment %}
+  </main>
   {% endif %}
 </body>
 

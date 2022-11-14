@@ -44,7 +44,7 @@
 
   <header>
     <h2 class="title">Crie sua própria lista de jogos.</h2>
-    <a href="criar-lista.html"><button class="btn-list">+ Criar Lista</button></a>
+    <a href="{% url 'authors:newlistadd' %}"><button class="btn-list">+ Criar Lista</button></a>
     <input type="search" name="pesquisar" id="pesquisar" placeholder="Pesquisar...">
   </header>
 
@@ -60,7 +60,8 @@
       {% endfor %}
     {% for list in lists %}
     <div class="cardi">
-        <a href="{% url 'authors:list_edit' list.id %}"><h3 class="card-name">{{list.title}}</h3></a> 
+        {% comment %} <a href="{% url 'authors:list_edit' list.id %}"><h3 class="card-name">{{list.title}}</h3></a>  {% endcomment %}
+        <a href="{% url 'authors:listdetail' list.id %}"><h3 class="card-name">{{list.title}}</h3></a> 
         <span class="author-list">👤 {{list.author}}</span>
         <p>{{list.description}}</p>
       </a>

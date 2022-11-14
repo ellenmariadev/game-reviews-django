@@ -1,19 +1,18 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
-from django.shortcuts import redirect, render
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from authors.forms.login import LoginForm
-from games.models import Games, List
+from games.models import Games, List, ReviewRating
 
-from .forms import RegisterForm
+from .forms import AuthorListForm, RegisterForm, ReviewForm
 from .models import Profile
 
-# from games.models import Favorite
-
 # Create your views here.
+
 
 def register_view(request):
     # messages.success(request, 'Cadastro efetuado com sucesso.')
@@ -22,6 +21,7 @@ def register_view(request):
     return render(request, 'authors/pages/register_view.html', {
         'form': form,
     })
+
 
 def register_create(request):
     if not request.POST:
@@ -39,6 +39,7 @@ def register_create(request):
         del(request.session['register_form_data'])
         return redirect(reverse('authors:login'))
     return redirect('authors:register')
+
 
 def login_view(request):
     form = LoginForm()
@@ -70,10 +71,12 @@ def login_create(request):
 
     return redirect(reverse('authors:home'))
 
+
 @login_required(login_url='authors:login', redirect_field_name='next')
 def logout_view(request):
     logout(request)
     return redirect(reverse('authors:login'))
+
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def games(request):
@@ -88,6 +91,7 @@ def games(request):
             'games': games,
         })
 
+
 @login_required(login_url='authors:login', redirect_field_name='next')
 def list_view(request):
     # games = Games.objects.filter(
@@ -101,24 +105,74 @@ def list_view(request):
             'lists': lists,
         })
 
+
 @login_required(login_url='authors:login', redirect_field_name='next')
 def list_edit(request, id):
-    list = List.objects.filter(
+    lists = List.objects.filter(
         author=request.user,
         pk=id,
-    )
+    ).first()
 
-    if not list:
+    if not lists:
         raise Http404()
 
+    form = AuthorListForm(
+        request.POST or None,
+        instance=lists
+    )
+
+    if form.is_valid():
+        lists = form.save(commit=False)
+        lists.author = request.user
+
+        lists.save()
+        messages.success(request, 'Edição salva.')
+        return redirect(reverse('authors:lists'))
+
+    allgames = Games.objects.all()
     listas = List.objects.get(id=id)
-    gamelist = listas.games.all()
+    gamelists = listas.games.all()
+    listaas = List.objects.all()
     return render(
         request, 
-        'games/pages/lista.html', 
+        'games/pages/lista-edit.html', 
         context={
-            'gamelist': gamelist
+            'form': form,
+            'gamelists': gamelists,
+            'allgames': allgames,
+            'listaas': listaas
         })
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def addgame(request):
+    lists = List.objects.filter(
+        author=request.user,
+    )
+
+    if not lists:
+        raise Http404()
+
+    print(lists)
+     
+    for li in lists:
+        gamesel = request.POST['gameSelect']
+        game = Games.objects.get(id=gamesel)
+        li.games.add(game)
+    return redirect(reverse('authors:lists'))
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def delete_item(request, games_id):
+
+    lists = List.objects.filter(author=request.user)
+
+    for li in lists:
+        game = Games.objects.get(id=games_id)
+        li.games.remove(game)
+
+    return redirect(reverse('authors:lists'))
+
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def favorites_add(request, games_id):
@@ -146,20 +200,110 @@ def favorites_view(request):
             'faves': fave,
         })
 
-# @login_required(login_url='authors:login', redirect_field_name='next')
-# def games_details(request, id):
-#     game = Games.objects.filter(
-#         author=request.user,
-#         pk=id,
-#     )
 
-#     if not game:
-#         raise Http404()
+@login_required(login_url='authors:login', redirect_field_name='next')
+def newlist_view(request):
 
-#     games = Games.objects.all().order_by('title')
-#     return render(
-#         request, 
-#         'games/pages/lista.html', 
-#         context={
+    return render(
+        request, 
+        'games/pages/register-list.html', 
+        context={
+        })
 
-#         })
+@login_required(login_url='authors:login', redirect_field_name='next')
+def newlist_add(request):
+
+    allgames = Games.objects.all()
+
+    form = AuthorListForm(
+        request.POST or None,
+    )
+
+    if form.is_valid():
+        lists = form.save(commit=False)
+        lists.author = request.user
+        lists.save()
+        messages.success(request, 'Edição salva.')
+    
+    return render(
+        request, 
+        'games/pages/register-list.html', 
+        context={
+            'form': form,
+            'allgames': allgames
+        })
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def details(request, id):
+
+    game = Games.objects.get(id=id)
+
+    return render(
+        request, 
+        'games/pages/lista-detail.html', 
+        context={
+            'game': game
+        })
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def game_details(request, id):
+
+    game = Games.objects.get(id=id)
+
+    if request.method == 'POST':
+
+        form = ReviewForm(
+            request.POST or None,
+        )
+
+        if form.is_valid():
+            form.instance.author = request.user
+            form.instance.game = game
+            form.save()
+            messages.success(request, 'Review Feito!')
+            return redirect('authors:home')
+    else: 
+        form = ReviewForm()
+    reviewList = ReviewRating.objects.filter(game=id)
+
+    print(reviewList)
+
+    reviews = ReviewRating.objects.all()
+    return render(
+        request, 
+        'games/pages/details.html', 
+        context={
+            'form': form,
+            'reviewList': reviewList,
+            'reviews': reviews,
+            'game': game
+        })
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def lists_details(request, id):
+
+    lists = List.objects.get(id=id)
+    gamelists = lists.games.all()
+
+    return render(
+        request, 
+        'games/pages/lista-detail.html', 
+        context={
+            'lists': lists,
+            'gamelists': gamelists
+        })
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def my_list(request):
+    author = request.user
+    profile = Profile.objects.get(author=author)
+    lists = profile.my_lists.all()
+
+    return render(
+        request, 
+        'games/pages/mylists.html', 
+        context={
+            'lists': lists,
+        })
+
