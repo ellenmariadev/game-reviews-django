@@ -47,16 +47,17 @@
   </header>
 
   <main>
-     <form class="formulario" method="POST">
-      {% for field in form %}
+    <form class="formulario" method="POST">
       {% csrf_token %}
 
-      <label for="{{field.name}}">{{field.label}}</label>
-      {{field}}
+      <label for="{{form.title.name}}">{{form.title.label}}</label>
+      {{form.title}}
+      <label for="{{form.description.name}}">{{form.description.label}}</label>
+      {{form.description}}
+      {{form.games}}
       {% if form.errors %}
       <small class="text-center">{{ field.errors }}</small>
       {%endif%}
-      {% endfor %}
       <button type="submit" class="btn-newlist">Adicionar</button>
     </form>  
 
@@ -71,7 +72,7 @@
       {%endfor%}
     </form>  {% endcomment %}
 
-   <form action="{% url 'authors:addgame' %}" method="POST" id="selectForm"> 
+   {% comment %} <form action="#" method="POST" id="selectForm"> 
       {% csrf_token %}
       <select form="selectForm" name="gameSelect" id="gameSelect" class='editInput'>
         {% for game in allgames %}
@@ -79,7 +80,7 @@
         {% endfor %}
       </select>
       <input class="btn-newlist" name="listas" type="submit" value="Adicionar">
-    </form> 
+    </form>   {% endcomment %}
 
 
     <p>{{allgames}}</p>

@@ -63,7 +63,8 @@
     {% for list in lists %}
     <div class="cardi">
         {% comment %} <a href="{% url 'authors:list_edit' list.id %}"><h3 class="card-name">{{list.title}}</h3></a>  {% endcomment %}
-        <a href="{% url 'authors:list_edit' list.id %}"><h3 class="card-name">{{list.title}}</h3></a> 
+        <a href="#"><h3 class="card-name">{{list.title}}</h3></a> 
+        <a style="color: orange;" href="{% url 'authors:list_edit' list.id %}"><h6>Editar</h6></a> 
         <span class="author-list">👤 {{list.author}}</span>
         <p>{{list.description}}</p>
       </a>

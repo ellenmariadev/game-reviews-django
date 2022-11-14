@@ -209,17 +209,14 @@ def favorites_view(request):
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
-def newlist_view(request):
-
+def newlist_view(request, id):
     return render(
         request, 
         'games/pages/register-list.html', 
-        context={
-        })
+        )
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def newlist_add(request):
-
     allgames = Games.objects.all()
     author = request.user
     profile = Profile.objects.get(author=author)
@@ -231,11 +228,13 @@ def newlist_add(request):
     )
 
     if form.is_valid():
-        lists = form.save(commit=False)
-        lists.author = request.user
-        lists.save()
+        form.instance.author = request.user
+        lists = form.save()
         profile.my_lists.add(lists)
-        messages.success(request, 'Edição salva.')
+        messages.success(request, 'Lista Criada!')
+        return redirect('authors:home')
+    else: 
+        form = AuthorListForm()
 
     return render(
         request, 

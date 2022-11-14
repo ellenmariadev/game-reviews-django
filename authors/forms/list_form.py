@@ -8,6 +8,7 @@ class AuthorListForm(forms.ModelForm):
         fields = [
             'title',
             'description',
+            'games'
         ]
 
         labels = {
@@ -40,5 +41,11 @@ class AuthorListForm(forms.ModelForm):
                 'autocomplete': 'off',
                 'required': 'true',
                 'placeholder': 'Digite o nome do jogo...'
+            }),
+            'games': forms.SelectMultiple(attrs={
+                'class': 'editInput',
+                'id': 'games',
+                'required': 'true',
+                'placeholder': 'Games'
             }),
         }

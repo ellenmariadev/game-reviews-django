@@ -46,7 +46,7 @@
     <h2>Editar Lista</h2>
   </header>
   <main>
-     <form class="formulario" method="POST">
+      {% comment %} <form class="formulario" method="POST">
       {% for field in form %}
       {% csrf_token %}
 
@@ -57,7 +57,19 @@
       {%endif%}
       {% endfor %}
       <button type="submit" class="btn-newlist">Editar</button>
-    </form>  
+    </form>   {% endcomment %}
+     <form class="formulario" method="POST">
+      {% csrf_token %}
+
+      <label for="{{form.title.name}}">{{form.title.label}}</label>
+      {{form.title}}
+      <label for="{{form.description.name}}">{{form.description.label}}</label>
+      {{form.description}}
+      {% if form.errors %}
+      <small class="text-center">{{ field.errors }}</small>
+      {%endif%}
+      <button type="submit" class="btn-newlist">Editar</button>
+    </form> 
 
      {% comment %} <form class="formulario" method="POST">
       {% csrf_token %}
