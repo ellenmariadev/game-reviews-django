@@ -70,7 +70,7 @@
       {%endfor%}
     </form>  {% endcomment %}
 
-   <form action="{% url 'authors:addgame' %}" method="POST" id="selectForm"> 
+   <form action="{% url 'authors:addgame' listas.id %}" method="POST" id="selectForm"> 
       {% csrf_token %}
       <select form="selectForm" name="gameSelect" id="gameSelect" class='editInput'>
         {% for game in allgames %}
@@ -90,11 +90,13 @@
         <img style="height: 100px; max-width: 80px;" src="{{game.image.url}}" alt="{{game.title}}">
         <h3 class="card-name">{{game.title}}</h3>
         <span class="author-list">{{game.publisher}}</span>
-        <a href="{% url 'authors:delete_item' game.id %}">❌</a>
+        <a href="{% url 'authors:delete_item' listas.id game.id %}">❌</a>
       </div>
       {% endfor %}
     </div>
-    <button style="background:red" type="submit" class="btn-newlist">❌ Exluir Lista</button>
+    <div>
+    <a style="margin-top: 1rem;" href="{% url 'authors:delete_list' listas.id %}" style="background:red" type="submit" class="btn-newlist">❌ Exluir Lista</a>
+    </div>
   </section>
   {% endif %}
 </body>

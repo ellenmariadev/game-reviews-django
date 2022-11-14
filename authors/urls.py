@@ -19,11 +19,12 @@ urlpatterns = [
     path('favorites/<int:games_id>', views.favorites_add, name='favorites_add'),
     # path('newlist/', views.newlist_view, name='newlist'),
     path('newlist/add', views.newlist_add, name='newlistadd'),
-    path('addgame/', views.addgame, name='addgame'),
-    path('delete/<int:games_id>', views.delete_item, name='delete_item'),
+    path('addgame/<int:id>', views.addgame, name='addgame'),
+    path('delete/<int:id>/<int:games_id>', views.delete_item, name='delete_item'),
     path('details/<int:id>', views.game_details, name='game_details'),
     path('game/<int:id>', views.details, name='details'),
     path('listdetail/<int:id>', views.lists_details, name='listdetail'),
+    path('deletelist/<int:id>', views.delete_list, name='delete_list'),
 
     # path('review/<int:games_id>', views.submit_review, name='review'),
 

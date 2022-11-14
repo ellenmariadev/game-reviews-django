@@ -140,14 +140,17 @@ def list_edit(request, id):
             'form': form,
             'gamelists': gamelists,
             'allgames': allgames,
-            'listaas': listaas
+            'listaas': listaas,
+            'listas': listas
         })
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
-def addgame(request):
+def addgame(request, id):
+    url = request.META.get('HTTP_REFERER')
     lists = List.objects.filter(
         author=request.user,
+        pk=id,
     )
 
     if not lists:
@@ -159,19 +162,23 @@ def addgame(request):
         gamesel = request.POST['gameSelect']
         game = Games.objects.get(id=gamesel)
         li.games.add(game)
-    return redirect(reverse('authors:lists'))
+    return redirect(url)
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
-def delete_item(request, games_id):
-
-    lists = List.objects.filter(author=request.user)
+def delete_item(request, id, games_id):
+    
+    url = request.META.get('HTTP_REFERER')
+    lists = List.objects.filter(
+        author=request.user,
+        pk=id,
+    )
 
     for li in lists:
         game = Games.objects.get(id=games_id)
         li.games.remove(game)
 
-    return redirect(reverse('authors:lists'))
+    return redirect(url)
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
@@ -214,6 +221,10 @@ def newlist_view(request):
 def newlist_add(request):
 
     allgames = Games.objects.all()
+    author = request.user
+    profile = Profile.objects.get(author=author)
+
+    print(author)
 
     form = AuthorListForm(
         request.POST or None,
@@ -223,14 +234,15 @@ def newlist_add(request):
         lists = form.save(commit=False)
         lists.author = request.user
         lists.save()
+        profile.my_lists.add(lists)
         messages.success(request, 'Edição salva.')
-    
+
     return render(
         request, 
         'games/pages/register-list.html', 
         context={
             'form': form,
-            'allgames': allgames
+            'allgames': allgames,
         })
 
 @login_required(login_url='authors:login', redirect_field_name='next')
@@ -300,6 +312,8 @@ def my_list(request):
     profile = Profile.objects.get(author=author)
     lists = profile.my_lists.all()
 
+    print(lists)
+
     return render(
         request, 
         'games/pages/mylists.html', 
@@ -307,3 +321,14 @@ def my_list(request):
             'lists': lists,
         })
 
+@login_required(login_url='authors:login', redirect_field_name='next')
+def delete_list(request, id): 
+    
+    author = request.user
+    profile = Profile.objects.get(author=author)
+    profile.my_lists.remove(id)
+
+    lists = List.objects.get(id=id)
+    lists.delete()
+
+    return redirect('authors:lists')
