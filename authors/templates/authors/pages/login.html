@@ -20,7 +20,6 @@
   <a href="{% url 'index' %}" class="btn-back position-absolute top-0 start-0"><i class="fa-solid fa-chevron-left"></i></a>
   <main>
     <h1 class="mb-4">Login</h1>
-    {% include 'authors/partials/login_message.html' %}
 
     <form class="formulario" action="{% url 'authors:login_create' %}" method="POST">
       {% if not request.user.is_authenticated %}
