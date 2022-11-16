@@ -2,6 +2,10 @@ a {
     text-decoration: none;
 }
 
+ul, li {
+  list-style: none;
+}
+
 input,
 button,
 textarea,
@@ -9,12 +13,20 @@ select {
   font: inherit;
 }
 
-.color-w {
-    color: #ffffff;
-}
 
-ul, li {
+ul, li, body, p, h2, h1, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
-  list-style: none;
 }
+
+.bg-nav {
+  background-color: #363434;
+}
+
+.bg-detail {
+  background-color: #BA6BEA;
+}
+
+.color-detail {
+  color: #BA6BEA;
+} 

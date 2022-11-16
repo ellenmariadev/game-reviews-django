@@ -19,12 +19,12 @@
 
 <body>
   {% if request.user.is_authenticated %}
-  <nav class="navbar">
+  <nav class="navbar pt-4">
     <div class="container-md">
-      <a class="navbar-brand text-light href=" #"><i class="bi bi-joystick"></i> Game Review</a>
+      <a class="navbar-brand text-light href="{% url 'authors:home' %}"><i class="bi bi-joystick"></i> Game Review</a>
       <ul class="d-flex menu-list">
-        <li><a class="menu-link text-light" href="#"><i class="bi bi-controller"></i> Ver Jogos</a></li>
-        <li><a class="menu-link text-light" href="#"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
+        <li><a class="menu-link text-light" href="{% url 'authors:home' %}"><i class="bi bi-controller"></i> Ver Jogos</a></li>
+        <li><a class="menu-link text-light" href="{% url 'authors:lists' %}"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
       </ul>
       <div class="btn-group">
         <button class="dropdown-toggle menu-user text-light fw-semibold" aria-labelledby="dropdownMenu1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,7 +32,7 @@
         </button>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="{% url 'authors:favorites' %}"><i class="bi bi-search-heart"></i> Favoritos</a></li>
-          <li><a class="dropdown-item" href="minhas-listas.html"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
+          <li><a class="dropdown-item" href="{% url 'authors:my_list' %}"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
           <li>
             <hr class="dropdown-divider">
           </li>
@@ -42,9 +42,9 @@
     </div>
   </nav>
 
-  <header>
-    <h2>Criar Lista</h2>
-  </header>
+  <div class="container-md py-4">
+    <h1><i class="bi bi-plus-square"></i> Adicionar Lista</h1>
+  </div>
 
   <main>
     <form class="formulario" method="POST">
@@ -82,8 +82,6 @@
       <input class="btn-newlist" name="listas" type="submit" value="Adicionar">
     </form>   {% endcomment %}
 
-
-    <p>{{allgames}}</p>
   </main>
   <section>
     <div class="cardes">
@@ -97,17 +95,12 @@
       {% endfor %}
     </div>
   </section>
-  {% endif %}
+  <footer>
+    <p style="color: #9c9c9c; font-size: 0.875rem; background-color: #11111142" class="text-center py-2 mt-4"><span style="color: #9c9c9c;" id="year"></span> © Todos os direitos reservados.</p>
+    </footer>
+    <script type="text/javascript">
+      document.getElementById("year").textContent = (new Date().getFullYear());
+    </script>
+    {% endif %}
 </body>
-
-<script type="text/Javascript">
-  function getValues() {
-    document.getElementById("selectDrop").onchange = function() {
-      window.location.href = this.children[this.selectedIndex].getAttribute('href')
-    };
-  } 
-    
-</script>
-
-
 </html>

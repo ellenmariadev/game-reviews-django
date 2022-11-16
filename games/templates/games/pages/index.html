@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Game Review</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'games/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/global-style.css' %}">
+</head>
+
+<body>
+    <div class="header-image">
+        <nav class="navbar bg-game-detail">
+          <div class="container-md">
+            <a class="navbar-brand text-light href=" {% url 'authors:home' %}"><i class="bi bi-joystick"></i> Game Review</a>
+            <ul class="d-flex menu-list">
+              <li><a class="menu-link text-light" href="{% url 'authors:login' %}">Login</a></li>
+              <li><a class="menu-link text-light" href="{% url 'authors:register' %}">Cadastre-se</a></li>
+            </ul>
+          </div>
+        </nav>
+
+    <section class="container-md">
+        <div class="col pt-5">
+            <h1 class="text-white title-main">GAME</h1>
+            <h1 class="text-lilas">REVIEW</h1>
+            <h2 class="stars">★ ★ ★ ★ ★</h2>
+        </div>
+    </section>
+
+    <section class="d-flex justify-content-between pt-5">    
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

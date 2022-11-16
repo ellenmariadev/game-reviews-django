@@ -3,13 +3,12 @@ from django import forms
 from games.models import List
 
 
-class AuthorListForm(forms.ModelForm):
+class AuthorListEditForm(forms.ModelForm):
     class Meta:
         model = List
         fields = [
             'title',
             'description',
-            'games'
         ]
 
         labels = {
@@ -23,10 +22,7 @@ class AuthorListForm(forms.ModelForm):
             },   
             'description': {
                 'required': 'Esse campo não pode ficar vazio.',
-            },
-            'games': {
-                'required': 'Esse campo não pode ficar vazio.'
-            },   
+            }, 
         }
         widgets = {
             'title': forms.TextInput(attrs={
@@ -42,11 +38,5 @@ class AuthorListForm(forms.ModelForm):
                 'autocomplete': 'off',
                 'required': 'true',
                 'placeholder': 'Digite aqui a descrição da lista...'
-            }),
-            'games': forms.SelectMultiple(attrs={
-                'class': 'editInput',
-                'id': 'games',
-                'required': 'true',
-                'placeholder': 'Games'
             }),
         }

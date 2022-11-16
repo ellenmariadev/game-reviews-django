@@ -1,7 +1,6 @@
 {% if request.user.is_authenticated %}
-<p>
-  Your are logged in with 
-  {{ request.user.username }}.
+<p class="text-center mt-3">
+  Você já está logado. 
   <a href="{% url 'authors:logout' %}">Sair da Conta</a>
 </p>
 {% for message in messages %}

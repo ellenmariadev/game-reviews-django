@@ -4,27 +4,28 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Listas</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Listas</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{% static 'games/css/listas.css' %}">
-    <link rel="stylesheet" href="{% static 'global/css/global-style.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">]
+  <link rel="stylesheet" href="{% static 'games/css/header.css' %}">
+  <link rel="stylesheet" href="{% static 'games/css/listas.css' %}">
+  <link rel="stylesheet" href="{% static 'global/css/global-style.css' %}">
 </head>
 
 <body>
   {% if request.user.is_authenticated %}
-  <nav class="navbar">
+  <nav class="navbar fixed-top bg-nav pt-4">
     <div class="container-md">
       <a class="navbar-brand text-light href=" #"><i class="bi bi-joystick"></i> Game Review</a>
       <ul class="d-flex menu-list">
-        <li><a class="menu-link text-light" href="#"><i class="bi bi-controller"></i> Ver Jogos</a></li>
-        <li><a class="menu-link text-light" href="#"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
+        <li><a class="menu-link text-light" href="{% url 'authors:home' %}"><i class="bi bi-controller"></i> Ver Jogos</a></li>
+        <li><a class="menu-link text-light" href="{% url 'authors:lists' %}"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
       </ul>
       <div class="btn-group">
         <button class="dropdown-toggle menu-user text-light fw-semibold" aria-labelledby="dropdownMenu1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,7 +33,7 @@
         </button>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="{% url 'authors:favorites' %}"><i class="bi bi-search-heart"></i> Favoritos</a></li>
-          <li><a class="dropdown-item" href="minhas-listas.html"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
+          <li><a class="dropdown-item" href="#"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
           <li>
             <hr class="dropdown-divider">
           </li>
@@ -42,35 +43,52 @@
     </div>
   </nav>
 
-  <header>
-    <h2 class="title">Adicionar <em>Nova Lista</em></h2>
-    <a href="{% url 'authors:newlistadd' %}"><button class="btn-list">+ Criar Lista</button></a>
-    <input type="search" name="pesquisar" id="pesquisar" placeholder="Pesquisar...">
-  </header>
+  <div class="container-md py-4 header mt-5">
+    <h1 class="home-title pt-4">Adicione novas listas</h1>
+    <a class="btn-list mt-3 mb-4" href="{% url 'authors:newlistadd' %}">Criar Lista</a>
+    <form action="{% url 'authors:search' %}" method="GET">
+      <div class="input-group">
+        <input type="search" name="q" class="form-control rounded-left input-search" placeholder="Pesquisar...">
+        <button id="btn-seach" type="submit" class="btn rounded-right">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
 
-{{lists}}
-
-  <main>
-      <p>
-        Your are logged in with 
-        {{ request.user.username }}
-      </p>
-      {% for message in messages %}
-          <div class="alert alert-success" role="alert">
-              {{ message }}
-          </div>
+  <main class="container-md"> 
+    <div>
+      {% for list in lists %}
+      <span class="date-list">{{list.updated_at}}</span>
+      <div class="d-flex justify-content-between">
+        <h5 class="title-list"><a href="{% url 'authors:listdetail' list.id %}">{{list.title}}</a></h5>
+        <div style="gap: 1rem" class="d-flex">
+          <h6><a class="name-edit" href="{% url 'authors:list_edit' list.id %}"><i class="bi bi-gear"></i> Editar</a></h6>
+          <h6><a class="remove-edit" href="{% url 'authors:delete_list' list.id %}"><i class="bi bi-trash3"></i> Excluir</a></h6>
+        </div>
+      </div>
+      <span class="author-list"><i class="bi bi-person-circle"></i> {{list.author}}</span>
+      <p class="description-lists">{{list.description|truncatewords:15}}</p>
+      <ul class="card-list mt-2">
+        {% for game in list.games.all %}
+        {% if game.image %}
+        <li><a class="game-title" href="{% url 'authors:game_details' game.id %}"><img class="game-image-list" data-bs-toggle="tooltip" data-bs-title="{{game.title}}" src="{{game.image.url}}" alt="{{game.title}}"></a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+      <hr class="text-light">
       {% endfor %}
-    {% for list in lists %}
-    <div class="cardi">
-        {% comment %} <a href="{% url 'authors:list_edit' list.id %}"><h3 class="card-name">{{list.title}}</h3></a>  {% endcomment %}
-        <a href="#"><h3 class="card-name">{{list.title}}</h3></a> 
-        <a style="color: orange;" href="{% url 'authors:list_edit' list.id %}"><h6>Editar</h6></a> 
-        <span class="author-list">👤 {{list.author}}</span>
-        <p>{{list.description}}</p>
-      </a>
     </div>
-    {% endfor %}
+
   </main>
+  <footer>
+    <p style="color: #9c9c9c; font-size: 0.875rem; background-color: #11111142" class="text-center py-2 mt-4"><span id="year"></span> © Todos os direitos reservados.</p>
+  </footer>
+  <script type="text/javascript">
+    document.getElementById("year").textContent = (new Date().getFullYear());
+  </script>
   {% endif %}
 </body>
 

@@ -19,12 +19,12 @@
 
 <body>
   {% if request.user.is_authenticated %}
-  <nav class="navbar">
+  <nav class="navbar py-4">
     <div class="container-md">
-      <a class="navbar-brand text-light href=" #"><i class="bi bi-joystick"></i> Game Review</a>
+      <a class="navbar-brand text-light href="{% url 'authors:home' %}"><i class="bi bi-joystick"></i> Game Review</a>
       <ul class="d-flex menu-list">
-        <li><a class="menu-link text-light" href="#"><i class="bi bi-controller"></i> Ver Jogos</a></li>
-        <li><a class="menu-link text-light" href="#"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
+        <li><a class="menu-link text-light" href="{% url 'authors:home' %}"><i class="bi bi-controller"></i> Ver Jogos</a></li>
+        <li><a class="menu-link text-light" href="{% url 'authors:lists' %}"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
       </ul>
       <div class="btn-group">
         <button class="dropdown-toggle menu-user text-light fw-semibold" aria-labelledby="dropdownMenu1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,7 +32,7 @@
         </button>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="{% url 'authors:favorites' %}"><i class="bi bi-search-heart"></i> Favoritos</a></li>
-          <li><a class="dropdown-item" href="minhas-listas.html"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
+          <li><a class="dropdown-item" href="{% url 'authors:my_list' %}"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
           <li>
             <hr class="dropdown-divider">
           </li>
@@ -42,11 +42,12 @@
     </div>
   </nav>
 
-  <header>
-    <h2>Editar Lista</h2>
-  </header>
+  <div class="container-md py-4">
+    <h1> <i class="bi bi-gear"> </i>Alterar Lista</h1>
+  </div>
+
   <main>
-      {% comment %} <form class="formulario" method="POST">
+      <form class="formulario" method="POST">
       {% for field in form %}
       {% csrf_token %}
 
@@ -57,70 +58,40 @@
       {%endif%}
       {% endfor %}
       <button type="submit" class="btn-newlist">Editar</button>
-    </form>   {% endcomment %}
-     <form class="formulario" method="POST">
-      {% csrf_token %}
-
-      <label for="{{form.title.name}}">{{form.title.label}}</label>
-      {{form.title}}
-      <label for="{{form.description.name}}">{{form.description.label}}</label>
-      {{form.description}}
-      {% if form.errors %}
-      <small class="text-center">{{ field.errors }}</small>
-      {%endif%}
-      <button type="submit" class="btn-newlist">Editar</button>
-    </form> 
-
-     {% comment %} <form class="formulario" method="POST">
-      {% csrf_token %}
-      <input id="inputGamelist" type="text" list="allgames" onblur="getValues()" class="editInput" placeholder="Buscar jogo...">
-      <p></p>
-      <datalist id="allgames">
-        {% for game in allgames %}
-        <option value="{{game.id}}">{{game.title}}</option>
-      </datalist>
-      {%endfor%}
-    </form>  {% endcomment %}
+    </form>  
 
    <form action="{% url 'authors:addgame' listas.id %}" method="POST" id="selectForm"> 
       {% csrf_token %}
-      <select form="selectForm" name="gameSelect" id="gameSelect" class='editInput'>
+      <select form="selectForm" name="gameSelect" id="gameSelect" class="editInput">
         {% for game in allgames %}
-        <option name="gameSelect" value="{{game.id}}">{{game.title}}</option>
+        <option name="gameSelect" class="selectOption"value="{{game.id}}">{{game.title}}</option>
         {% endfor %}
       </select>
       <input class="btn-newlist" name="listas" type="submit" value="Adicionar">
     </form> 
 
-
-    <p>{{allgames}}</p>
   </main>
   <section>
     <div class="cardes">
       {% for game in gamelists %}
-      <div class="carde">
-        <img style="height: 100px; max-width: 80px;" src="{{game.image.url}}" alt="{{game.title}}">
+      <div class="carde d-flex">
+        <img class="game-edit" src="{{game.image.url}}" alt="{{game.title}}">
+        <div>
         <h3 class="card-name">{{game.title}}</h3>
-        <span class="author-list">{{game.publisher}}</span>
-        <a href="{% url 'authors:delete_item' listas.id game.id %}">❌</a>
+        <span class="game-publisher">{{game.publisher}}</span>
+        <a class="btn-remove" href="{% url 'authors:delete_item' listas.id game.id %}">X</a> 
+
+        </div>
       </div>
       {% endfor %}
     </div>
-    <div>
-    <a style="margin-top: 1rem;" href="{% url 'authors:delete_list' listas.id %}" style="background:red" type="submit" class="btn-newlist">❌ Exluir Lista</a>
-    </div>
   </section>
+  <footer>
+    <p style="color: #9c9c9c; font-size: 0.875rem; background-color: #11111142" class="text-center bg-detail py-2 mt-4"><span id="year"></span> © Todos os direitos reservados.</p>
+  </footer>
+  <script type="text/javascript">
+    document.getElementById("year").textContent = (new Date().getFullYear());
+  </script>
   {% endif %}
 </body>
-
-<script type="text/Javascript">
-  function getValues() {
-    document.getElementById("selectDrop").onchange = function() {
-      window.location.href = this.children[this.selectedIndex].getAttribute('href')
-    };
-  } 
-    
-</script>
-
-
 </html>

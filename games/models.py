@@ -33,6 +33,7 @@ class Games(models.Model):
             avg = float(reviews['average'])
         return avg
 
+
 class ReviewRating(models.Model):
     game = models.ForeignKey(Games, on_delete=models.CASCADE)
     review = models.TextField(max_length=500, blank=True)
@@ -43,6 +44,7 @@ class ReviewRating(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True
     )
+
 
 class List(models.Model):
     title = models.CharField(max_length=100)

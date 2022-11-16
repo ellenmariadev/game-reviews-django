@@ -14,53 +14,87 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="stylesheet" href="{% static 'games/css/criarlistas.css' %}">
+  <link rel="stylesheet" href="{% static 'games/css/header.css' %}">
+  <link rel="stylesheet" href="{% static 'games/css/details.css' %}">
   <link rel="stylesheet" href="{% static 'global/css/global-style.css' %}">
   <link rel="stylesheet" href="{% static 'games/css/rating.css' %}">
+
+  <style>
+    .header-image {
+      height: 65vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:linear-gradient(0deg, rgba(54,52,52,1) 7%, rgba(9,9,121,0) 100%), url({{game.image.url}}) center center fixed no-repeat;
+      background-size: cover;
+    }
+ </style> 
 
 </head>
 
 <body>
   {% if request.user.is_authenticated %}
-  <nav class="navbar">
-    <div class="container-md">
-      <a class="navbar-brand text-light href=" #"><i class="bi bi-joystick"></i> Game Review</a>
-      <ul class="d-flex menu-list">
-        <li><a class="menu-link text-light" href="#"><i class="bi bi-controller"></i> Ver Jogos</a></li>
-        <li><a class="menu-link text-light" href="#"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
-      </ul>
-      <div class="btn-group">
-        <button class="dropdown-toggle menu-user text-light fw-semibold" aria-labelledby="dropdownMenu1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="bi bi-person-circle"></i> {{request.user.username}}
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="{% url 'authors:favorites' %}"><i class="bi bi-search-heart"></i> Favoritos</a></li>
-          <li><a class="dropdown-item" href="minhas-listas.html"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="{% url 'authors:logout' %}"><i class="bi bi-box-arrow-in-left"></i> Sair</a></li>
+  <div class="header-image">
+    <nav class="navbar bg-game-detail">
+      <div class="container-md">
+        <a class="navbar-brand text-light href=" {% url 'authors:home' %}"><i class="bi bi-joystick"></i> Game Review</a>
+        <ul class="d-flex menu-list">
+          <li><a class="menu-link text-light" href="{% url 'authors:home' %}"><i class="bi bi-controller"></i> Ver Jogos</a></li>
+          <li><a class="menu-link text-light" href="{% url 'authors:lists' %}"><i class="bi bi-list-ul"></i> Ver Listas</a></li>
         </ul>
+        <div class="btn-group">
+          <button class="dropdown-toggle menu-user text-light fw-semibold" aria-labelledby="dropdownMenu1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle"></i> {{request.user.username}}
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'authors:favorites' %}"><i class="bi bi-search-heart"></i> Favoritos</a></li>
+            <li><a class="dropdown-item" href="{% url 'authors:my_list' %}"><i class="bi bi-list-ul"></i> Minhas Listas</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'authors:logout' %}"><i class="bi bi-box-arrow-in-left"></i> Sair</a></li>
+          </ul>
+        </div>
       </div>
+    </nav>
+
+    <div class="container-md detail-header">
+      <h1 class="title text-center">{{game.title}}</h1>
     </div>
-  </nav>
-
-  <header>
-    <h2 class="title">{{game.title}}</h2>
-    {% comment %} <a href="{% url 'authors:newlist' %}"><button class="btn-list">+ Criar Lista</button></a> {% endcomment %}
-  </header>
+  </div>
 
 
-  <main>
-    <h4>🗨 Comentários(4) </h4>
-    <form action="{% url 'authors:game_details' game.id %}" method="POST">
-      {% csrf_token %}
+  <!-- <button onClick="chek_mark({{game.url.image}})">Oi</button> -->
 
-        {% comment %} Rating Stars {% endcomment %}
+  <main class="container-md">
+    <ul class="info-game">
+      <li><small>DATA DE LANÇAMENTO</small>
+        <p>{{game.release_date}}</p>
+      </li>
+      <li><small>DESENVOLVEDOR</small>
+        <p>{{game.publisher}}</p>
+      </li>
+      <li class="genre-list">
+        <small>GÊNERO</small>
+        <div class="genres">
+          {% for genre in game.genre.all %}
+          <p>{{ genre }}</p>
+          {%endfor%}
+        </div>
+      </li>
+    </ul>
 
-        <label>Como você avalia esse jogo?</label>
-        <br>
-        <div class="rate">
+    <section class="about-game">
+      <h2>SOBRE</h2>
+      <p>{{game.description}}</p>
+    </section>
+
+    <section class="review-game">
+      <form action="{% url 'authors:game_details' game.id %}" method="POST">
+        <h3><i class="bi bi-chat-right-dots-fill me-2"></i>COMENTÁRIOS (4) </h3>
+        {% csrf_token %}
+
+        <!-- <div class="rate">
           <input type="radio" name="rating10" value="5" id=""><label for="rating10" title="5"></label>
           <input type="radio" name="rating9" value="4.5" id=""><label for="rating9" title="4.5" class="half"></label>
           <input type="radio" name="rating8" value="4" id=""><label for="rating8" title="4"></label>
@@ -71,29 +105,42 @@
           <input type="radio" name="rating3" value="1.5" id=""><label for="rating3" title="1.5" class="half"></label>
           <input type="radio" name="rating2" value="1" id=""><label for="rating2" title="1"></label>
           <input type="radio" name="rating1" value="0.5" id=""><label for="rating1" title="0.5" class="half"></label>
-          <!-- <input type="radio" name="rating1" value="0.5" id=""><label for="rating1" title="0.5" class="half"></label> -->
+        </div> -->
+        <div class="mb-3">
+          <p>Como você avalia esse jogo?</p>
+          {{form.rating}}
+        </div>
+        <div class="mb-3">
+          {{form.review}}
         </div>
 
-        {{form.review}}
-        {{form.rating}}
+        {% comment %} <textarea placeholder="Digite o seu comentário..." class="editInput" name="review" id="" rows="4"></textarea>
+        <br> {% endcomment %}
+        <input class="btn-review" type="submit" value="Enviar">
+      </form>
+    </section>
 
-         {% comment %} <textarea placeholder="Digite o seu comentário..." class="editInput" name="review" id="" rows="4"></textarea>
-        <br>  {% endcomment %}
-        <input class="editInput" type="submit" value="Submit Review"> 
-    </form>
-
-    <div>
-      {{reviewList}}
-      {% comment %} {{reviews}} {% endcomment %}
-      
-
+    <div class="review-users">
+      {% for review in reviews %}
+      <div class="review-title">
+        <h4 class="username"><i class="bi bi-person-circle"></i> {{review.author}}</h4>
+        <small>{{review.created_at}}</small>
+      </div>
+      <h5>★ {{review.rating}}</h5>
+      <p class="game-description">{{review.review}}</p>
       <hr>
-      <h6>👤 Fulano</h6>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae felis ac massa accumsan placerat. Morbi nec facilisis urna. Phasellus augue leo, semper at urna eget, pretium ultricies diam. Nam imperdiet non massa nec porttitor. Sed dolor neque, vestibulum a vulputate ut, suscipit ut erat. Quisque accumsan libero quis diam euismod varius. Aenean dapibus tempus vestibulum. Nullam eu venenatis erat, a ornare arcu. Aenean quis diam quis nulla commodo lacinia sed vel lacus. Nullam id malesuada dolor. Morbi justo ante, scelerisque dictum sem quis, maximus pretium arcu.</p>
-      <hr>
+      {% endfor %}
     </div>
   </main>
+  <footer>
+  <p style="color: #9c9c9c; font-size: 0.875rem; background-color: #11111142" class="text-center py-2 mt-4"><span style="color: #9c9c9c;" id="year"></span> © Todos os direitos reservados.</p>
+  </footer>
+  <script type="text/javascript">
+    document.getElementById("year").textContent = (new Date().getFullYear());
+  </script>
   {% endif %}
 </body>
+
+
 
 </html>

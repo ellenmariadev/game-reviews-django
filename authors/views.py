@@ -8,14 +8,13 @@ from django.urls import reverse
 from authors.forms.login import LoginForm
 from games.models import Games, List, ReviewRating
 
-from .forms import AuthorListForm, RegisterForm, ReviewForm
+from .forms import AuthorListEditForm, AuthorListForm, RegisterForm, ReviewForm
 from .models import Profile
 
 # Create your views here.
 
 
 def register_view(request):
-    # messages.success(request, 'Cadastro efetuado com sucesso.')
     register_form_data = request.session.get('register_form_data', None)
     form = RegisterForm(register_form_data)
     return render(request, 'authors/pages/register_view.html', {
@@ -53,7 +52,6 @@ def login_create(request):
         raise Http404()
 
     form = LoginForm(request.POST)
-    # login_url = reverse('authors:login')
 
     if form.is_valid():
         authenticated_user = authenticate(
@@ -80,9 +78,7 @@ def logout_view(request):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def games(request):
-    # games = Games.objects.filter(
-    #     author=request.user
-    # )
+
     games = Games.objects.all().order_by('title')
     return render(
         request, 
@@ -94,10 +90,8 @@ def games(request):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def list_view(request):
-    # games = Games.objects.filter(
-    #     author=request.user
-    # )
-    lists = List.objects.all()
+
+    lists = List.objects.all().order_by('-created_at')
     return render(
         request, 
         'games/pages/lists.html', 
@@ -116,7 +110,7 @@ def list_edit(request, id):
     if not lists:
         raise Http404()
 
-    form = AuthorListForm(
+    form = AuthorListEditForm(
         request.POST or None,
         instance=lists
     )
@@ -127,7 +121,7 @@ def list_edit(request, id):
 
         lists.save()
         messages.success(request, 'Edição salva.')
-        return redirect(reverse('authors:lists'))
+        return redirect(reverse('authors:my_list'))
 
     allgames = Games.objects.all()
     listas = List.objects.get(id=id)
@@ -183,15 +177,20 @@ def delete_item(request, id, games_id):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def favorites_add(request, games_id):
+    url = request.META.get('HTTP_REFERER')
     author = request.user
     fave = Games.objects.get(id=games_id)
     profile = Profile.objects.get(author=author)
     if profile.favourite.filter(id=games_id).exists():
         profile.favourite.remove(fave)
+        # messages.error(request, 'Removido dos favoritos.')
+        return redirect(url)
+
     else:
         profile.favourite.add(fave)
-        return redirect(reverse('authors:home'))
-    return redirect('authors:home')
+        # messages.success(request, 'Adicionado aos favoritos.')
+        return redirect(url)
+    # return redirect(reverse('authors:favorites'))
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
@@ -232,7 +231,7 @@ def newlist_add(request):
         lists = form.save()
         profile.my_lists.add(lists)
         messages.success(request, 'Lista Criada!')
-        return redirect('authors:home')
+        return redirect('authors:my_list')
     else: 
         form = AuthorListForm()
 
@@ -259,7 +258,7 @@ def details(request, id):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def game_details(request, id):
-
+    url = request.META.get('HTTP_REFERER')
     game = Games.objects.get(id=id)
 
     if request.method == 'POST':
@@ -273,14 +272,14 @@ def game_details(request, id):
             form.instance.game = game
             form.save()
             messages.success(request, 'Review Feito!')
-            return redirect('authors:home')
+            return redirect(url)
     else: 
         form = ReviewForm()
     reviewList = ReviewRating.objects.filter(game=id)
+    # print(reviewList)
 
-    print(reviewList)
-
-    reviews = ReviewRating.objects.all()
+    reviews = ReviewRating.objects.order_by('-created_at')
+    print(reviews)
     return render(
         request, 
         'games/pages/details.html', 
@@ -309,7 +308,7 @@ def lists_details(request, id):
 def my_list(request):
     author = request.user
     profile = Profile.objects.get(author=author)
-    lists = profile.my_lists.all()
+    lists = profile.my_lists.all().order_by('-updated_at')
 
     print(lists)
 
@@ -330,4 +329,19 @@ def delete_list(request, id):
     lists = List.objects.get(id=id)
     lists.delete()
 
-    return redirect('authors:lists')
+    return redirect('authors:my_list')
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def search(request): 
+
+    search_term = request.GET.get('q', '').strip()
+
+    games = Games.objects.filter(
+        title__contains=search_term,
+    ).order_by('-id')   
+
+    return render(request, 'games/pages/home.html', {
+        'page_title': f'Search for "{search_term}" |',
+        'search_term': search_term,
+        'games': games,
+    })
