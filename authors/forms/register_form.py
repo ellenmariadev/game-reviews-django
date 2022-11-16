@@ -17,20 +17,8 @@ class RegisterForm(forms.ModelForm):
                 code='Invalid'
             )
 
-    # email = forms.EmailField(
-    #     error_messages={'required': 'Esse campo não pode ficar vazio.', 
-    #     'invalid': 'Digite um e-mail válido.'},
-    #     required=True,
-    #     label='E-mail',
-    # )
-
-
     username = forms.CharField(
         label='Usuário',
-        # help_text=(
-        #     'Username must have letters, numbers or one of those @.+-_. '
-        #     'The length should be between 4 and 150 characters.'
-        # ),
         error_messages={
             'required': 'Esse campo não pode ficar vazio.',
             'min_length': 'Usuário deve ter pelo menos 4 caracteres.',
@@ -159,7 +147,4 @@ class RegisterForm(forms.ModelForm):
             )
             raise ValidationError({
                 'password2': password_confirmation_error,
-                # 'password2': [
-                #     password_confirmation_error,
-                # ],
             })

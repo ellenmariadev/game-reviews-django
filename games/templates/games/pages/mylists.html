@@ -46,7 +46,7 @@
   <div class="container-md py-4 header mt-5">
     <h1 class="home-title pt-4">Adicione novas listas</h1>
     <a class="btn-list mt-3 mb-4" href="{% url 'authors:newlistadd' %}">Criar Lista</a>
-    <form action="{% url 'authors:search' %}" method="GET">
+    <form action="{% url 'authors:mylist_search' %}" method="GET">
       <div class="input-group">
         <input type="search" name="q" class="form-control rounded-left input-search" placeholder="Pesquisar...">
         <button id="btn-seach" type="submit" class="btn rounded-right">

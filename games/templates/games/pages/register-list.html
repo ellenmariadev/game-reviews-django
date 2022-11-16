@@ -60,28 +60,7 @@
       {%endif%}
       <button type="submit" class="btn-newlist">Adicionar</button>
     </form>  
-
-     {% comment %} <form class="formulario" method="POST">
-      {% csrf_token %}
-      <input id="inputGamelist" type="text" list="allgames" onblur="getValues()" class="editInput" placeholder="Buscar jogo...">
-      <p></p>
-      <datalist id="allgames">
-        {% for game in allgames %}
-        <option value="{{game.id}}">{{game.title}}</option>
-      </datalist>
-      {%endfor%}
-    </form>  {% endcomment %}
-
-   {% comment %} <form action="#" method="POST" id="selectForm"> 
-      {% csrf_token %}
-      <select form="selectForm" name="gameSelect" id="gameSelect" class='editInput'>
-        {% for game in allgames %}
-        <option name="gameSelect" value="{{game.id}}">{{game.title}}</option>
-        {% endfor %}
-      </select>
-      <input class="btn-newlist" name="listas" type="submit" value="Adicionar">
-    </form>   {% endcomment %}
-
+    
   </main>
   <section>
     <div class="cardes">

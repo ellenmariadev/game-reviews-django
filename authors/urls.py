@@ -14,10 +14,10 @@ urlpatterns = [
     path('lists/', views.list_view, name='lists'),
     path('lists/<int:id>/edit/', views.list_edit, name='list_edit'),
     path('mylists/', views.my_list, name='my_list'),
-    # path('games/game/<int:id>', views.game_details, name='games_details'),
+
     path('favorites/', views.favorites_view, name='favorites'),
     path('favorites/<int:games_id>', views.favorites_add, name='favorites_add'),
-    # path('newlist/', views.newlist_view, name='newlist'),
+
     path('newlist/add/', views.newlist_add, name='newlistadd'),
     path('addgame/<int:id>', views.addgame, name='addgame'),
     path('delete/<int:id>/<int:games_id>', views.delete_item, name='delete_item'),
@@ -25,9 +25,11 @@ urlpatterns = [
     path('game/<int:id>', views.details, name='details'),
     path('listdetail/<int:id>', views.lists_details, name='listdetail'),
     path('deletelist/<int:id>', views.delete_list, name='delete_list'),
-    path('games/search/', views.search, name="search"),
+    path('search/', views.search, name="search"),
+    path('search/lists', views.search_list, name='search_list'),
+    path('search/mylist', views.search_mylist, name='mylist_search'),
+    path('delete/review/<int:id>', views.delete_review, name='delete_review'),
 
-    # path('review/<int:games_id>', views.submit_review, name='review'),
 
 
 

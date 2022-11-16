@@ -183,14 +183,11 @@ def favorites_add(request, games_id):
     profile = Profile.objects.get(author=author)
     if profile.favourite.filter(id=games_id).exists():
         profile.favourite.remove(fave)
-        # messages.error(request, 'Removido dos favoritos.')
         return redirect(url)
 
     else:
         profile.favourite.add(fave)
-        # messages.success(request, 'Adicionado aos favoritos.')
         return redirect(url)
-    # return redirect(reverse('authors:favorites'))
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
@@ -260,35 +257,43 @@ def details(request, id):
 def game_details(request, id):
     url = request.META.get('HTTP_REFERER')
     game = Games.objects.get(id=id)
+    reviewList = ReviewRating.objects.filter(game=id)
+    reviews = ReviewRating.objects.all().order_by('-created_at')
+    review = ReviewRating.objects.order_by('-created_at')
 
     if request.method == 'POST':
-
-        form = ReviewForm(
-            request.POST or None,
-        )
-
-        if form.is_valid():
-            form.instance.author = request.user
-            form.instance.game = game
+        try:
+            review = ReviewRating.objects.get(author__id=request.user.id, game__id=id)
+            form = ReviewForm(request.POST or None, instance=review)
             form.save()
+            return redirect(url)
+        except ReviewRating.DoesNotExist:
+            form = ReviewForm(request.POST)
+        if form.is_valid():
+            data = ReviewRating()
+            data.rating = form.cleaned_data['rating']
+            data.review = form.cleaned_data['review']
+            data.game_id = id
+            data.author_id = request.user.id
+            data.save()
             messages.success(request, 'Review Feito!')
             return redirect(url)
-    else: 
-        form = ReviewForm()
-    reviewList = ReviewRating.objects.filter(game=id)
-    # print(reviewList)
-
-    reviews = ReviewRating.objects.order_by('-created_at')
-    print(reviews)
     return render(
         request, 
         'games/pages/details.html', 
         context={
-            'form': form,
             'reviewList': reviewList,
             'reviews': reviews,
             'game': game
         })
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def delete_review(request, id): 
+    url = request.META.get('HTTP_REFERER')
+    reviews = ReviewRating.objects.get(id=id)
+    reviews.delete()
+
+    return redirect(url)
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def lists_details(request, id):
@@ -309,8 +314,6 @@ def my_list(request):
     author = request.user
     profile = Profile.objects.get(author=author)
     lists = profile.my_lists.all().order_by('-updated_at')
-
-    print(lists)
 
     return render(
         request, 
@@ -338,10 +341,42 @@ def search(request):
 
     games = Games.objects.filter(
         title__contains=search_term,
-    ).order_by('-id')   
-
+    ).order_by('-id')  
+ 
     return render(request, 'games/pages/home.html', {
         'page_title': f'Search for "{search_term}" |',
         'search_term': search_term,
         'games': games,
+    })
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def search_list(request): 
+
+    search_term = request.GET.get('q', '').strip()
+
+    lists = List.objects.filter(
+        title__contains=search_term,
+    ).order_by('-id')   
+
+    return render(request, 'games/pages/lists.html', {
+        'page_title': f'Search for "{search_term}" |',
+        'search_term': search_term,
+        'lists': lists
+    })
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def search_mylist(request): 
+
+    search_term = request.GET.get('q', '').strip()
+    author = request.user
+    profile = Profile.objects.get(author=author)
+
+    lists = profile.my_lists.filter(
+        title__contains=search_term,
+    ).all().order_by('-id')   
+
+    return render(request, 'games/pages/mylists.html', {
+        'page_title': f'Search for "{search_term}" |',
+        'search_term': search_term,
+        'lists': lists
     })
