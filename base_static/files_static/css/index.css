@@ -1,0 +1,39 @@
+@import 'header.css';
+
+.header-image {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgb(54,52,52);
+    background:linear-gradient(0deg, rgba(54,52,52,1) 7%, rgba(9,9,121,0) 100%), url(../assets/bg-index.jpg) center center fixed no-repeat;
+    background-size: cover;
+}
+
+.bg-game-detail {
+    background-color: rgba(12, 12, 12, 0.589);
+}
+
+.stars {
+    font-size: 5rem;
+    color: orange;
+    padding-left: 4rem;
+}
+
+
+h1.title-main{
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 7rem;
+    line-height: 1;
+}
+
+h1.text-lilas{
+    color: #BA6BEA;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;    
+    font-size: 7rem;
+    padding-left: 4rem;
+}

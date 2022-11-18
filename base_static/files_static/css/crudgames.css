@@ -1,0 +1,121 @@
+body {
+    background-color: #4B4646;
+    color: #ffffff;
+}
+
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+a:hover {
+    color: #ffffff;
+}
+
+h2 {
+    text-align: center;
+}
+
+
+.bg-nav {
+    background-color: #BA6BEA;
+}
+
+input, textarea {
+    display: grid;
+    background-color: transparent;
+    border: 1px solid #9C9C9C;
+    border-radius: 10px;
+    padding: .875rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    width: 100%;
+}
+
+
+header {
+    margin-top: 5rem;
+}
+
+h2 {
+    margin-bottom: 1rem;
+}
+
+main {
+    display: grid;
+    max-width: 1080px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+.btn-newlist {
+    border: none;
+    background-color: #BA6BEA;
+    padding: .5rem 1rem;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.btn-newlist:hover {
+    background-color: #ca83f7;
+}
+
+.carde {
+    background: rgba(152, 151, 151, 0.2);
+    border-radius: 10px;
+    padding: 1rem;
+    position: relative;
+    z-index: 1;
+    max-width: max-content;
+}
+
+.carde::before {
+    content: "X";
+    position: absolute;
+    display: flex;
+    top: -0.60em;
+    right: -0.60em;
+    height: 1.5em;
+    width: 1.5em;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #CA3D3D;
+    color: white;
+    z-index: 999;
+    cursor: pointer;
+}
+
+h3 {
+    font-size: 1rem;
+}
+
+span {
+    font-size: .875rem;
+}
+
+
+section { 
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+section button {
+    max-width: fit-content;
+    place-self: center;
+    margin-top: 2rem;
+}
+
+.cardes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin-top: 1rem;   
+    gap: 2rem;
+}
+

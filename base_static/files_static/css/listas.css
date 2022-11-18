@@ -1,0 +1,203 @@
+body { 
+    height: 100vh;
+    background-color: #363434;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.name-edit {
+    background: rgba(100, 92, 73, 0.432);
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: orange;
+}
+
+.remove-edit {
+    background: rgba(100, 73, 73, 0.432);
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: #ff5b5b;
+}
+
+.name-edit:hover {
+    color: orange;
+    background-color: #52505085;
+}
+
+.remove-edit:hover {
+    color: #ff5b5b;
+    background-color: #52505085;
+}
+
+.author-list {
+    font-size: .875rem;
+    font-weight: 500;
+    color: #BA6BEA
+}
+
+.card-name {
+    font-size: 1.3rem;
+}
+
+.card-list {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-list {
+    background-color: #BA6BEA;
+    border-radius: 4px;
+    border: none;
+    color: #ffffff;
+    padding: .4rem 1rem;
+    max-width: fit-content;
+    place-self: center;
+    font-weight: 500;
+}
+
+.btn-list:hover {
+    color: #ffffff;
+}
+
+.header {
+    display: grid;
+}
+
+.btn-list:hover {
+    background-color: #ca83f7;
+}
+
+input[type="search"] {
+    width: 100%;
+    border: 1px solid #999898;
+    border-right-color: transparent;
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+.input-search {
+    font-weight: 500;
+    color: #9C9C9C !important;
+}
+
+.input-search::placeholder {
+    color: #9C9C9C;
+}
+
+.form-control:focus {
+    border-color: #BA6BEA;
+    background-color: transparent;
+}
+
+input[type="search"]:focus-within {
+    outline: 1px solid #BA6BEA;
+    border-color: 1px solid transparent;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.box-game {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.game-image {
+    width: 120px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+#pesquisar {
+    margin-bottom: 1.5rem;
+}
+
+
+.bi-heart {
+    color: #eb8282;
+}
+
+.bi-heart:hover {
+    padding: 4px 8px;
+    background-color: #9998983f; 
+    border-radius: 10px;
+}
+
+.card-games li {
+    text-align: center;
+}
+
+.card-games img {
+    margin-bottom: .4rem;
+}
+
+.message {
+    padding: .7rem .875rem;
+    border-radius: 4px;
+    border: 1.5px solid #999898;
+    background: rgba(128, 128, 128, 0.418);
+    color: #999898;
+  }
+  
+  .message-error {
+    border: 1.5px solid #eb8282;
+    background: #c5898975;
+    color: #ffffffc7;
+  }
+  
+  .message-success {
+    border: 1.5px solid #7aaf89;
+    background: #82b1907a;
+    color: #ffffffc7;
+  }
+  
+ .btn {
+    background: transparent;
+    border: 1px solid #999898;
+    border-radius: 10px;
+    border-left-color: transparent;
+    color: #999898;
+ }
+
+.home-title {
+    font-weight: 300;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #ffffffd5;
+}
+
+.title-list {
+    margin: 0;
+    padding: 5px 10px;
+    background-color: #99989842;
+    border-radius: 10px;
+    max-width: fit-content;
+    font-weight: 400;
+}
+
+.title-list a {
+    color: #ffffff;
+}
+
+.game-image-list {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.date-list {
+    font-size: .7rem;
+    color: #9C9C9C;
+}
+
+.description-lists {
+    font-weight: 500;
+    color: #999898;
+}
+
+.ative {
+    display: none;
+}

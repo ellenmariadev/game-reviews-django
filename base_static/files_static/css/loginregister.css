@@ -1,0 +1,130 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #4B4646;
+    opacity: 1;
+    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #3b3939 6px ), repeating-linear-gradient( #19191f55, #1b1b1b );
+    height: 100vh;
+    place-content: center;
+}
+
+main {
+  padding: .5rem;
+  height: fit-content;
+}
+
+form {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.btn-back {
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    color: #ffffff;
+    padding: 1rem;
+}
+
+h1 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 3rem;
+}
+
+p {
+    color: #9C9C9C;
+}
+
+a {
+    color: #ffffff;
+}
+
+a:hover {
+    color: #ffffff;
+}
+
+a:not(.btn-login a) {
+    color: #BA6BEA;
+}
+
+a:not(.btn-login a):hover {
+    color: #ce9dec;
+}
+
+.btn-login {
+    border: none;
+    background-color: #BA6BEA;
+    padding: .5rem 1rem;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    place-self: center;
+}
+
+svg {
+    margin: 0 0 0 10px;
+}
+
+.btn-login:hover svg {
+    margin: 0 0 0 18px;
+    transition: 0.3s;
+  }
+  
+  .btn-login:not(:hover) svg {
+    transition: 0.3s;
+  }
+  
+  .btn-login:active {
+    transform: scale(0.9, 0.9);
+    transition: 200ms;
+  }
+  
+  .btn-login:not(:active) {
+    transition: 200ms;
+  }
+
+  .input-group {
+    position: relative;
+   }
+   
+
+label {
+  color: #9C9C9C;
+}
+
+#floatingInput, #floatingPassword {
+  background-color: transparent;
+  border: 1.5px solid #9C9C9C;
+  color: #9C9C9C;
+  font-weight: 700;
+}
+
+#floatingInput:focus, #floatingPassword:focus {
+  border-color: #BA6BEA;
+  box-shadow: inset 0 -1px 0 transparent;
+}
+
+#floatingInput:focus ~ label, #floatingPassword:focus ~ label {
+  color: #BA6BEA;
+  opacity: 1;
+}
+
+.form-floating {
+  width: 100%;
+}
+
+.errorlist {
+  color: rgb(252, 64, 64);
+  display: block;
+  font-size: .7rem !important;
+}

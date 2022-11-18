@@ -1,0 +1,51 @@
+header {
+    display: grid;
+    place-items: center;
+    max-width: 1080px;
+    margin: 0 auto;
+    gap: 1rem;
+    margin-top: 5rem;
+}
+
+.menu-link {
+    padding: .5rem 1rem; 
+    margin-left: 10px;
+    border-radius: 10px;
+    background-color: #ffffff2d;
+    font-weight: 500;
+}
+
+.menu-link a {
+    font-weight: 500;
+}
+
+.menu-user {
+    background-color: transparent;
+    border: none;
+}
+
+.dropdown-menu[data-bs-popper] {
+    top: 100%;
+    left: -40px;
+    margin-top: var(--bs-dropdown-spacer);
+}
+
+.dropdown-item {
+    color: #999898;
+}
+
+.dropdown-item:focus {
+    background-color: #BA6BEA;
+}
+
+.dropdown-menu{
+    background-color: #D6D2D2;
+}
+
+.dropdown-divider {
+    background-color: #f3f1f1;
+}
+
+.bi-joystick {
+    color: #BA6BEA;
+}

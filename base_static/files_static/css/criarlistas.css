@@ -1,0 +1,147 @@
+
+@import 'header.css';
+
+body {
+    background-color: #4B4646;
+}
+
+h1 {
+    text-align: center;
+    color: #c9c9c9;
+    font-weight: 300;
+    font-size: 1.8rem;
+}
+
+.bi-gear {
+    color: #d4a74498;
+    font-size: 1.7rem;
+}
+
+.bi-plus-square {
+    font-size: 2rem;
+    color: #61c94179;
+    margin-right: 10px;
+}
+
+.selectOption {
+    background-color: #4B4646;
+    color: rgba(255, 255, 255, 0.664);
+    font-weight: 500;
+}
+
+.editInput {
+    display: block;
+    background-color: transparent;
+    border: 1.5px solid #9a9a9a9a;
+    border-radius: 10px;
+    padding: .875rem;
+    margin-bottom: 1rem;
+    color: #c9c9c9;
+    font-weight: 500;
+    width: 100%;
+    margin-top: .3rem;
+    outline: none;
+}
+
+.editInput:focus-within {
+    border-color: #BA6BEA;
+}
+
+label {
+    color: #BA6BEA;
+    font-weight: 500;
+}
+
+main {
+    display: grid;
+    max-width: 1080px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+.btn-newlist {
+    border: none;
+    background-color: #BA6BEA;
+    padding: .5rem 1rem;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.btn-newlist:hover {
+    background-color: #ca83f7;
+}
+
+.cardes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-top: 1rem;   
+    gap: 1rem;
+}
+
+.carde {
+    background: rgba(152, 151, 151, 0.2);
+    border-radius: 10px;
+    padding: 1rem;
+    position: relative;
+    z-index: 1;
+    gap: .875rem;
+}
+
+.btn-remove {
+    position: absolute;
+    display: flex;
+    top: -0.50em;
+    right: -0.50em;
+    height: 1.7em;
+    width: 1.7em;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #CA3D3D;
+    color: white;
+    z-index: 999;
+    cursor: pointer;
+    font-weight: 400;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.btn-remove:hover {
+    background-color: #af2f2f;
+    color: #ffffff;
+}
+
+
+h3 {
+    font-size: 1rem;
+    color: #c9c9c9;
+}
+
+span {
+    font-size: .875rem;
+}
+
+
+section { 
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+section button {
+    max-width: fit-content;
+    place-self: center;
+    margin-top: 2rem;
+}
+
+.game-edit {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%
+}
+
+.game-publisher {
+    color: #ffffff;
+}

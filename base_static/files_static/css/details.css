@@ -1,0 +1,234 @@
+.detail-tittle {
+    font-weight: 400;
+    color: aliceblue;
+    font-size: 1.8rem;
+}
+
+h1 {
+    font-size: 5rem;
+    color: rgba(255, 255, 255, 0.651);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+span {
+    font-weight: 400;
+    color: #BA6BEA;
+}
+
+body { 
+    background: rgb(54,52,52);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #BEBDBD;
+}
+
+p {
+    color: #BEBDBD;
+}
+
+.bg-game-detail {
+    background-color: rgba(12, 12, 12, 0.589);
+}
+
+.header-image {
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background:linear-gradient(0deg, rgba(54,52,52,1) 7%, rgba(9,9,121,0) 100%), url(../assets/farcry3.jpg) center center fixed no-repeat;
+    background-size: cover;
+}
+
+.game-image-detail {
+    max-width: 200px;
+    height: 300px;
+    display: block;
+}
+
+.detail-header {
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+}
+
+.game-description {
+    padding: 0 10rem;
+    word-break: break-all;
+}
+
+small {
+    color: #BA6BEA;
+    font-size: .75rem;
+    font-weight: 500;
+    display: block;
+}
+
+.genre-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.genres {
+    display: flex;
+    gap: 10px;
+}
+
+.genres p {
+    padding: 1px 10px;
+    background-color: #bebdbd2d;
+    border-radius: 10px;
+    font-size: .875rem;
+}
+
+.info-game {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+}
+
+.about-game h2 {
+    color: #BA6BEA;
+    margin-bottom: 1rem;
+    margin-top: 4rem;
+}
+
+.about-game p {
+    margin-bottom: 4rem;
+}
+
+.bi-chat-right-dots-fill {
+    color: #BEBDBD;
+}
+
+h3 {
+    color: #BA6BEA;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.btn-review {
+    border: none;
+    background-color: #BA6BEA;
+    padding: .4rem 1rem;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.box-game {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.bi-heart {
+    padding: 4px 8px;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.bi-heart {
+    color: #eb8282;
+}
+
+.bi-heart:hover {
+    padding: 4px 8px;
+    background-color: #9998983f; 
+    border-radius: 10px;
+}
+
+.card-games img {
+    margin-bottom: .4rem;
+}
+
+.ative {
+    display: none;
+} 
+
+.review-game p {
+    color: #BEBDBD;
+    margin-top: 10px;
+}
+
+.review-game textarea, input[type="number"] {
+    background: #66666628;
+    border: 1px solid #8a8a8a9a;
+    border-radius: 10px;
+    padding: 4px 10px;
+    color: #BEBDBD;
+    font-weight: 500;
+    font-size: .875rem;
+    outline: none;
+}
+
+.review-game span {
+    color: #BEBDBD;
+}
+
+.review-game textarea {
+    width: 500px;
+}
+
+input[type="number"] {
+    width: 50px;
+}
+
+.username {
+    color: #BEBDBD;
+    font-size: 1.2rem;
+}
+
+.review-users {
+    margin-top: 4rem;
+}
+
+.review-users small {
+    color: #bebdbd79;
+}
+
+.review-title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.review-users .bi-person-circle {
+    color: #BA6BEA;
+}
+
+.review-users h5 {
+    color: orange;
+    font-size: .750rem;
+    font-family: 'Bootstrap-icons';
+}
+
+hr {
+    color: #bebdbd9d;
+}
+
+.review-users p {
+    padding-left: 1.5rem;
+    padding-top: .875rem;
+}
+
+.remove-review {
+    background: rgba(100, 73, 73, 0.432);
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: #ff5b5b;
+    margin-left: 4px;
+}
+
+.bi-trash3 {
+    color: #ff5b5b !important;
+}
+
+.remove-review:hover {
+    color: #ff5b5b;
+    background-color: #52505085;
+}
